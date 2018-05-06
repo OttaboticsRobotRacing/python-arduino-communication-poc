@@ -19,7 +19,8 @@ def read_serial(q):
             while ser.isOpen():
                 if (ser.inWaiting() > 0):
                     data_str = ser.read(ser.inWaiting()).decode('ascii')
-                    print(data_str, end='')
+                    print('\r                                                     <\r', end='')
+                    print(str(data_str).replace('\n',''), end='')
                 stay_alive = True
                 if not q.empty():
                     stay_alive = q.get()
@@ -58,11 +59,15 @@ def write_serial():
             if e == 'd':
                 message = 'd'
                 ser.write(message.encode('ascii'))
+            if e == ' ':
+                message = 'SPACE'
+                ser.write(message.encode('ascii'))
 
             # print('\r' + repr(e) + '\r')
-            print('\r')
+            print('\r\t\t\t\t\t\r', end='')
 
             if e == 'q':
+                print('Exiting...')
                 return
 
 def main():
@@ -71,8 +76,9 @@ def main():
     reader = threading.Thread(target=read_serial, args=(q,))
     reader.start()
 
+    print('Please wait...')
     time.sleep(5)
-    print('*** Ready to read keystrokes ***')
+    print('\r*** Ready to read keystrokes ***')
 
     write_serial()
 

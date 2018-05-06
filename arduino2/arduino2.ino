@@ -4,12 +4,22 @@ int incomingByte = 0;
 char buffer[MAX_SIZE];
 int count = 0;
 
-unsigned long prev_time; 
+unsigned long prev_time;
+
+const int LED_W = 3;
+const int LED_A = 5;
+const int LED_S = 6;
+const int LED_D = 4;
 
 void setup()
 {
     Serial.begin(9600);
     pinMode(LED_BUILTIN, OUTPUT);
+    
+    pinMode(LED_W, OUTPUT);
+    pinMode(LED_A, OUTPUT);
+    pinMode(LED_S, OUTPUT);
+    pinMode(LED_D, OUTPUT);
 
     prev_time = millis();
     
@@ -45,20 +55,42 @@ void loop()
         String s = (buffer);
 
         // do stuff here
-        Serial.println("ACK: " + s);
-
-        digitalWrite(LED_BUILTIN, HIGH);
-        delay(100);
-        digitalWrite(LED_BUILTIN, LOW);
-        delay(100);
-        digitalWrite(LED_BUILTIN, HIGH);
-        delay(100);
-        digitalWrite(LED_BUILTIN, LOW);
-        delay(100);
-        digitalWrite(LED_BUILTIN, HIGH);
-        delay(100);
-        digitalWrite(LED_BUILTIN, LOW);
-        delay(100);
+        if (s == "w")
+        {
+            digitalWrite(LED_W, HIGH);
+            delay(10);
+            digitalWrite(LED_W, LOW);
+            Serial.println("ACK: " + s);
+        }
+        else if (s == "a")
+        {
+            digitalWrite(LED_A, HIGH);
+            delay(10);
+            digitalWrite(LED_A, LOW);
+            Serial.println("ACK: " + s);
+        }
+        else if (s == "s" || s == " ")
+        {
+            digitalWrite(LED_S, HIGH);
+            delay(10);
+            digitalWrite(LED_S, LOW);
+            Serial.println("ACK: " + s);
+        }
+        else if (s == "d")
+        {
+            digitalWrite(LED_D, HIGH);
+            delay(10);
+            digitalWrite(LED_D, LOW);
+            Serial.println("ACK: " + s);
+        }
+        else
+        {
+            digitalWrite(LED_BUILTIN, HIGH);
+            delay(10);
+            digitalWrite(LED_BUILTIN, LOW);
+            Serial.println("ACK E: " + s);
+            
+        }
 
         // reset buffer
         memset(&buffer[0], 0, sizeof(buffer));
