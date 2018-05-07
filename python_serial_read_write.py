@@ -31,7 +31,44 @@ def read_serial(q):
         print('Serial port not found')
         return
 
-def write_serial():
+def write_serial_message(message):
+    connected = False
+    port = '/dev/ttyUSB0'
+    baud = 9600
+
+    try:
+        ser = serial.Serial(port, baud, timeout=0)
+    except serial.serialutil.SerialException:
+        print('Serial port not found')
+        return
+
+    ser.close()
+    ser.open()
+
+    ser.write(message.encode('ascii'))
+
+    ser.close()
+
+def write_serial_message_2(ser, message):
+    ser.write(message.encode('ascii'))
+
+def serial_setup():
+    connected = False
+    port = '/dev/ttyUSB0'
+    baud = 9600
+
+    try:
+        ser = serial.Serial(port, baud, timeout=0)
+    except serial.serialutil.SerialException:
+        print('Serial port not found')
+        return
+
+    ser.close()
+    ser.open()
+
+    return ser
+
+def write_serial_interactive():
     connected = False
     port = '/dev/ttyUSB0'
     baud = 9600
@@ -80,7 +117,7 @@ def main():
     time.sleep(5)
     print('\r*** Ready to read keystrokes ***')
 
-    write_serial()
+    write_serial_interactive()
 
     q.put(False)
 
