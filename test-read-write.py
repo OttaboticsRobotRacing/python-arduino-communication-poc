@@ -65,6 +65,9 @@ def main():
     num_cycles = 100
 
     ser = python_serial_read_write.serial_setup()
+
+    start_time = time.time()
+
     for i in range(num_cycles):
         python_serial_read_write.write_serial_message_2(ser, 'w')
         time.sleep(led_delay)
@@ -79,7 +82,10 @@ def main():
 
     q.put(False)
 
+    end_time = time.time()
+
     print('\nTotal writes: ' + str(num_cycles * num_test_per_cycle))
+    print('Elapsed time: ' + str(end_time - start_time))
 
     print('*** END OF TEST ***')
 
