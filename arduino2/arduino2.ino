@@ -11,18 +11,20 @@ const int LED_A = 5;
 const int LED_S = 6;
 const int LED_D = 4;
 
+const int LED_DELAY = 5;
+
 void setup()
 {
     Serial.begin(9600);
     pinMode(LED_BUILTIN, OUTPUT);
-    
+
     pinMode(LED_W, OUTPUT);
     pinMode(LED_A, OUTPUT);
     pinMode(LED_S, OUTPUT);
     pinMode(LED_D, OUTPUT);
 
     prev_time = millis();
-    
+
     delay(500);
     Serial.println("======================");
     Serial.println("= Arduino serial POC =");
@@ -58,38 +60,38 @@ void loop()
         if (s == "w")
         {
             digitalWrite(LED_W, HIGH);
-            delay(10);
+            delay(LED_DELAY);
             digitalWrite(LED_W, LOW);
             Serial.println("ACK: " + s);
         }
         else if (s == "a")
         {
             digitalWrite(LED_A, HIGH);
-            delay(10);
+            delay(LED_DELAY);
             digitalWrite(LED_A, LOW);
             Serial.println("ACK: " + s);
         }
-        else if (s == "s" || s == " ")
+        else if (s == "s" || s == "SPACE")
         {
             digitalWrite(LED_S, HIGH);
-            delay(10);
+            delay(LED_DELAY);
             digitalWrite(LED_S, LOW);
             Serial.println("ACK: " + s);
         }
         else if (s == "d")
         {
             digitalWrite(LED_D, HIGH);
-            delay(10);
+            delay(LED_DELAY);
             digitalWrite(LED_D, LOW);
             Serial.println("ACK: " + s);
         }
         else
         {
             digitalWrite(LED_BUILTIN, HIGH);
-            delay(10);
+            delay(LED_DELAY);
             digitalWrite(LED_BUILTIN, LOW);
             Serial.println("ACK E: " + s);
-            
+
         }
 
         // reset buffer
